@@ -1,0 +1,56 @@
+## comandos de linha de comando docker
+~$ docker container run <nome do container>
+
+## para ter acesso ao terminal do container
+~$ docker container run -it <nome do container>
+
+## vizualisar os processos 
+~$ docker container ps
+
+## mostra todos os container independente do stauts do container
+~$ docker container ls -a
+
+## reuso de container
+
+    ~$ docker container start -ai <name of container or id>
+
+    ~$ docker container stop <name of container or id>
+
+    ~$ docker container restart <name of container or id>
+
+## seta uma porta usando nginx 
+#usado como 8080 para uso externo e 80 no uso interno do container pelo nginx
+sudo docker container run -p 8080:80 nginx
+
+## seta um controle de volume entre o host e o container
+sudo docker container run -p 8080:80 -v $(pwd)/not-found:/usr/share/nginx/html nginx
+
+## seta um container em background usando o deamon
+sudo docker container run -d --name ex-deamon-basic -p 8080:80 -v $(pwd)/html:/usr/share/nginx/html nginx
+
+## comandos para manipular o container em background "-d"
+
+## ver o historico de uso do container (logs)
+docker container logs <name or id of container>
+
+## inspecioanr os dados JSON do container
+docker container inspect <name of container or id>
+
+docker image pull <name of image in normal repository>
+
+
+## docker registry 
+um lugar que vc pode baixar suas imagens
+
+## docker hub
+SASS - cloud registry as a service
+
+## comando docker que mostra a variavel de ambiente setada no docker file
+docker container run ex-build-arg bash -c 'echo $S3_BUCKET'
+
+## comando que gera um container passando um parametro para a variavel de ambiente 
+docker image build --build-arg S3_BUCKET=myapp -t ex-build-arg .
+
+## como saber uma propriedade da sua imagem de maneira filtrada
+
+docker image inspect --format="{{index .Config.Labels \"maintainer\"}}" <nome da imagem>
